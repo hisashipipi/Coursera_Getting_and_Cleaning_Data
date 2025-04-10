@@ -1,5 +1,8 @@
 #### Scripts for cleaning and processing the input dataset "Human Activity Recognition Using Smartphones"
 
+## Load library
+library(dplyr)
+
 ## Load input dataset
 # Download input datasets from "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 # Moving the files to the working directory
@@ -30,10 +33,6 @@ features_mean_std <- grep("mean\\(\\)|std\\(\\)", colnames(df_all), value = TRUE
 df_all_sub <- df_all %>% select(subject, activity, all_of(features_mean_std)) 
 # all_of(): If any columns in features_mean_std are missing from the data frame, it will raise an error.
 
-# Adding a column representing "test" or "train" group (optional)
-group <- c(rep("test", 2947), rep("train", 7352))
-df_all_sub <- df_all_sub %>% mutate(group = group)
-df_all_sub <- df_all_sub %>% select(subject, activity, group, everything())
 
 ## 3 Uses descriptive activity names to name the activities in the data set
 df_all_sub2 <- df_all_sub %>% 
@@ -58,7 +57,7 @@ colnames(df_all_sub2) <- gsub("^f", "frequency", colnames(df_all_sub2))
 # where() could select columns of a certain data type (is.numeric, is.character, is.logical, etc.).
 df_all_sub2_mean <- df_all_sub2 %>%
                     group_by(subject, activity) %>%
-                    summarize(across(where(is.numeric),mean))        
+                    summarize_all(mean)        
                 
 # Save "df_all_sub2_mean" as "tidy_data.txt"   
 write.table(df_all_sub2_mean, "tidy_data.txt", row.names = FALSE, col.names = TRUE)
