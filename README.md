@@ -42,7 +42,7 @@ The objective of this project is to merge, clean, and analyze data collected fro
 
 **6. Rename variable names:** The column names are cleaned and organized by `gsub()` to make them descriptive and consistent.
 
-**7. Creating a tidy dataset**: The script generates a tidy dataset where each variable is averaged for each subject and each activity using `group_by()`, `summarize()`, and `across()`.
+**7. Creating a tidy dataset**: The script generates a tidy dataset where each variable is averaged for each subject and each activity using `group_by()` and `summarize_all()`.
 
 **8. Writing the final dataset**: The tidy dataset is written to a file `tidy_data.txt` by `write.table()`.
 
